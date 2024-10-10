@@ -1,0 +1,16 @@
+---
+- name: Create content view version from SCM repo
+  hosts: localhost
+  become: true
+
+  tasks:
+    - name: Create content view version {{ content_view_version }}
+      redhat.satellite.content_view_version:
+        content_view: "{{ content_view_name }}"
+        username: "{{ satellite_username }}"
+        password: "{{ satellite_password }}"
+        server_url: "{{ item }}"
+        organization: "{{ satellite_organization }}"
+        version: "{{ content_view_version }}"
+        validate_certs: false
+      loop: "{{ satellite_urls }}"
